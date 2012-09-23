@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <locale.h>
-
+#include <getopt.h>
 #include <string.h>
 
 #include "jmines.h"
@@ -46,19 +46,17 @@ main (int argc, char **argv)
     (void) setlocale (LC_ALL, "");
 
     /* Process options */
-    /* XXX: Testing code only */
-    if (argc >= 3)
-    {
-        num_mines = atoi (argv[1]);
-        height    = atoi (argv[2]);
-        width     = atoi (argv[3]);
-    }
+    if (process_options (argc, argv, &num_mines, &height, &width) == 1)
+        goto exit_error;
 
     /* Initialize interface */
 
     /* Initialize game data */
     if (!(jmines = init_game (num_mines, height, width)))
-        goto init_game_fail;
+    {
+        printf ("%s\n", "Could not allocate game_data");
+        goto exit_error;
+    }
 
     /* Game loop */
     switch (game_loop (jmines))
@@ -73,7 +71,72 @@ main (int argc, char **argv)
 
     exit (0);
 
-init_game_fail:
-    printf ("%s\n", "Could not allocate game_data");
+exit_error:
     exit (errno);
+}
+
+/*
+ * Rudimentary command line option processing
+ */
+int
+process_options (int argc, char **argv, int *num_mines, int *h, int *w)
+{
+    int opt = 0;
+
+    while ((opt = getopt (argc, argv, "hvn:x:y:")) != -1)
+    {
+        switch (opt)
+        {
+            case 'h':
+                print_help ();
+                return 1;
+                break;
+            case 'v':
+                print_version ();
+                return 1;
+                break;
+            case 'n':
+                *num_mines = atoi (optarg);
+                if (*num_mines == 0) *num_mines = 10;
+                break;
+            case 'x':
+                *w = atoi (optarg);
+                if (*w == 0) *w = 10;
+            case 'y':
+                *h = atoi (optarg);
+                if (*h == 0) *h = 10;
+            default:
+                print_help ();
+                return 1;
+                break;
+        }
+    }
+    return 0;
+}
+
+void
+print_help ()
+{
+    fprintf (stderr, "%s\n",
+"Usage: jmines [OPTION]...\n"
+"Play minesweeper on the command line.\n"
+""
+" -n <num>\tset number of mines to <num>\n"
+" -x <width>\tset grid with to <width>\n"
+" -y <height>\tset grid height to <height>\n"
+" -h\t\tdisplay this help end exit\n"
+" -v\t\toutput version information and exit");
+}
+
+void
+print_version ()
+{
+    fprintf (stderr, "%s\n",
+"jmines 1.0.0\n"
+"Copyright (C) 2012 Jeremy Brubaker\n"
+"License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.\n"
+"This is free software: you are free to change and redistribute it.\n"
+"There is NO WARRANTY, to the extent permitted by law.\n"
+"\n"
+"Written by Jeremy Brubaker.");
 }

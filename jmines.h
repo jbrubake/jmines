@@ -21,4 +21,9 @@
 #ifndef JMINES_H
 #define JMINES_H
 
+int process_options (int, char **, int *, int *, int *);
+
+void print_help ();
+void print_version ();
+
 #endif /* !defined (JMINES_H) */
