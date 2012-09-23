@@ -24,7 +24,7 @@ $(PROGNAME): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 depend: $(SOURCES)
-	$(MKDEPEND) > .depend
+	$(MKDEPEND) $(SOURCES) > .depend
 
 TAGS:
 	$(CTAGS) *
