@@ -104,14 +104,14 @@ init_game (int num_mines, int height, int width)
 
             /* Check each adjacent cell and increment contents if it contains a
              * mine. Grid padding is always empty */
-            (data->grid.cell[x  ][y-1].contents == MINE) && data->grid.cell[x][y].contents++;
-            (data->grid.cell[x  ][y+1].contents == MINE) && data->grid.cell[x][y].contents++;
-            (data->grid.cell[x-1][y-1].contents == MINE) && data->grid.cell[x][y].contents++;
-            (data->grid.cell[x-1][y  ].contents == MINE) && data->grid.cell[x][y].contents++;
-            (data->grid.cell[x-1][y+1].contents == MINE) && data->grid.cell[x][y].contents++;
-            (data->grid.cell[x+1][y-1].contents == MINE) && data->grid.cell[x][y].contents++;
-            (data->grid.cell[x+1][y  ].contents == MINE) && data->grid.cell[x][y].contents++;
-            (data->grid.cell[x+1][y+1].contents == MINE) && data->grid.cell[x][y].contents++;
+            if (data->grid.cell[x  ][y-1].contents == MINE) data->grid.cell[x][y].contents++;
+            if (data->grid.cell[x  ][y+1].contents == MINE) data->grid.cell[x][y].contents++;
+            if (data->grid.cell[x-1][y-1].contents == MINE) data->grid.cell[x][y].contents++;
+            if (data->grid.cell[x-1][y  ].contents == MINE) data->grid.cell[x][y].contents++;
+            if (data->grid.cell[x-1][y+1].contents == MINE) data->grid.cell[x][y].contents++;
+            if (data->grid.cell[x+1][y-1].contents == MINE) data->grid.cell[x][y].contents++;
+            if (data->grid.cell[x+1][y  ].contents == MINE) data->grid.cell[x][y].contents++;
+            if (data->grid.cell[x+1][y+1].contents == MINE) data->grid.cell[x][y].contents++;
         }
     }
 
@@ -121,7 +121,8 @@ init_game (int num_mines, int height, int width)
 int
 flag_cell (game_data *data, int x, int y)
 {
-    mark_cell (data, x, y, FLAG);
+    (void) mark_cell (data, x, y, FLAG);
+
     if (data->grid.cell[x][y].contents == MINE)
     {
         data->num_flags++;
@@ -183,14 +184,14 @@ uncover_cell (game_data *data, int x, int y)
     else
     {
         data->grid.cell[x][y].is_covered = FALSE;
-        uncover_cell (data, x-1, y-1);
-        uncover_cell (data, x-1, y);
-        uncover_cell (data, x-1, y+1);
-        uncover_cell (data, x  , y-1);
-        uncover_cell (data, x  , y+1);
-        uncover_cell (data, x+1, y-1);
-        uncover_cell (data, x+1, y);
-        uncover_cell (data, x+1, y+1);
+        (void) uncover_cell (data, x-1, y-1);
+        (void) uncover_cell (data, x-1, y);
+        (void) uncover_cell (data, x-1, y+1);
+        (void) uncover_cell (data, x  , y-1);
+        (void) uncover_cell (data, x  , y+1);
+        (void) uncover_cell (data, x+1, y-1);
+        (void) uncover_cell (data, x+1, y);
+        (void) uncover_cell (data, x+1, y+1);
     }
 
     return SUCCESS;

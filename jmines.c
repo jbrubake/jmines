@@ -22,12 +22,12 @@
 \*====================================================================*/
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <errno.h>
 #include <locale.h>
 
 #include <string.h>
 
-#include "game.h"
 #include "cli.h"
 
 int
@@ -40,7 +40,7 @@ main (int argc, char **argv)
     game_data *jmines = NULL;
 
     /* Set locale according to environment */
-    setlocale (LC_ALL, "");
+    (void) setlocale (LC_ALL, "");
 
     /* Process options */
     /* XXX: Testing code only */

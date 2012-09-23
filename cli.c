@@ -38,7 +38,7 @@ game_loop (game_data *data)
         print_grid (data);
         print_menu ();
 
-        input = getc (stdin);        /* Only need the first character */
+        input = (char) getc (stdin);        /* Only need the first character */
         while (getc (stdin) != '\n') /* Discard rest of line */
             ;
 
@@ -56,14 +56,14 @@ game_loop (game_data *data)
                 break;
             case '3':
                 get_coordinates (&x, &y);
-                guess_cell (data, x, y);
+                (void) guess_cell (data, x, y);
                 break;
             case '4':
                 get_coordinates (&x, &y);
-                unmark_cell (data, x, y);
+                (void) unmark_cell (data, x, y);
                 break;
             case '5':
-                return 0;
+                return 0; /* Must be a cleaner way to quit */
                 break;
             default:
                 printf ("%s\n", "Invalid choice!");
@@ -80,7 +80,7 @@ get_coordinates (int *x, int *y)
     printf ("%s", "Coordinates (x, y)? ");
 
     /* TODO: Make this safer!! */
-    fgets (input, 80, stdin);
+    (void) fgets (input, 80, stdin);
     *x = atoi (strtok (input, ", "));
     *y = atoi (strtok (NULL, " \n"));
 }
@@ -110,8 +110,8 @@ print_grid (game_data *data)
     for (i = 1; i <= data->grid.width; i++)
     {
         printf ("%c", ' ');
-        (i < 100) && printf ("%c", ' ');
-        (i < 10) && printf ("%c", ' ');
+        if (i < 100) printf ("%c", ' ');
+        if (i < 10)  printf ("%c", ' ');
         printf ("%d ", i);
     }
 
@@ -119,8 +119,8 @@ print_grid (game_data *data)
 
     for (y = 1; y < data->grid.height+1; y++)
     {
-        (y < 100) && printf ("%c", ' ');
-        (y < 10) && printf ("%c", ' ');
+        if (y < 100) printf ("%c", ' ');
+        if (y < 10)  printf ("%c", ' ');
         printf ("%d", y);
         for (x = 1; x < data->grid.width+1; x++)
         {
@@ -139,7 +139,7 @@ print_cell_contents (game_data *data, int x, int y)
         printable = 'F';
     else if (data->grid.cell[x][y].marker == GUESS)
         printable = 'G';
-    else if (data->grid.cell[x][y].is_covered == TRUE)
+    else if (data->grid.cell[x][y].is_covered == true)
         printable = '.';
     else
     {

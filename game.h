@@ -21,7 +21,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-/* There has to be an easier way to define bool */
+/* XXX: There must be another way to do this! */
 #include <ncurses.h>
 
 /* Max dimensions of grid */
@@ -67,9 +67,9 @@ typedef struct game_data {
 
 } game_data;
 
-int rand_limit (int);
+static int rand_limit (int);
 
-game_data *init_game (int, int, int);
+/*@null@*/ game_data *init_game (int, int, int);
 
 int uncover_cell (game_data *, int, int);
 

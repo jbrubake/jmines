@@ -24,11 +24,11 @@
 #include "game.h"
 
 int game_loop (game_data *);
-void get_coordinates (int *x, int *y);
 
-void print_grid    (game_data *);
-void print_menu    ();
+static void print_grid    (game_data *);
+static void print_menu    ();
 
-char print_cell_contents (game_data *, int, int);
+static void get_coordinates (int *x, int *y);
+static char print_cell_contents (game_data *, int, int);
 
 #endif /* !defined (CLI_H) */
