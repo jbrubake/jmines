@@ -38,7 +38,7 @@ game_loop (game_data *data)
         print_grid (data);
         print_menu ();
 
-        input = (char) getc (stdin);        /* Only need the first character */
+        input = (char) getc (stdin); /* Only need the first character */
         while (getc (stdin) != '\n') /* Discard rest of line */
             ;
 

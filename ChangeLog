@@ -1,22 +1,8 @@
 2012-09-23 Jeremy Brubaker <jbru362@gmail.com>
 
-* game.h: Marking functions now return a value
-
-* game.c: Return LOSER and WINNER from marking functions as appropriate
-
-* cli.c: Test for and return LOSER and WINNER return codes
-
-* jmines.c: Check and use return value of game_loop ()
-
-Game loop properly terminates if a MINE is uncovered (lose the game) or all
-mines have been correctly flagged (win the game). uncover_cell returns LOSER if
-a MINE is uncovered. flag_cell returns WINNER if all mines have been correctly
-flagged. 
+* game.c (mark_cell): Do not allow player to mark an uncovered cell
 
 2012-09-23 Jeremy Brubaker <jbru362@gmail.com>
 
-* game.c: Do not allow player to mark an uncovered cell
-
-mark_cell() automatically returns success when attempting to mark an uncovered
-cell.
-
+* game.c, game.h (uncover_cell): Return LOSER if player uncovers a mine
+(flag_cell): Return WINNER if all mines flagged
