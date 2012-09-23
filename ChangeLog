@@ -1,5 +1,9 @@
 2012-09-23 Jeremy Brubaker <jbru362@gmail.com>
 
+* cli.c (game_loop, print_menu): Changed menu selections to letters, not numbers
+
+2012-09-23 Jeremy Brubaker <jbru362@gmail.com>
+
 * game.c (mark_cell): Do not allow player to mark an uncovered cell
 
 2012-09-23 Jeremy Brubaker <jbru362@gmail.com>
