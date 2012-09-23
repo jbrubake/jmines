@@ -69,12 +69,9 @@ typedef struct game_data {
 
 /*@null@*/ game_data *init_game (int, int, int);
 
-       int uncover_cell (game_data *, int, int);
-       int unmark_cell  (game_data *, int, int);
-       int flag_cell    (game_data *, int, int);
-       int guess_cell   (game_data *, int, int);
-static int mark_cell    (game_data *, int, int, cell_marker);
-
-static int rand_limit (int);
+int uncover_cell (game_data *, int, int);
+int unmark_cell  (game_data *, int, int);
+int flag_cell    (game_data *, int, int);
+int guess_cell   (game_data *, int, int);
 
 #endif /* !defined (GAME_H) */

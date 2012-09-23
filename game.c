@@ -24,6 +24,9 @@
 
 #include "game.h"
 
+static int mark_cell    (game_data *, int, int, cell_marker);
+static int rand_limit (int);
+
 /*
  * Initialize a game data structure and return a pointer
  */

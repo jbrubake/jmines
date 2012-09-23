@@ -126,7 +126,7 @@ print_help ()
 " -x <width>\tset grid with to <width>\n"
 " -y <height>\tset grid height to <height>\n"
 " -h\t\tdisplay this help end exit\n"
-" -v\t\toutput version information and exit",
+" -v\t\toutput version information and exit\n",
         PROG_NAME);
 }
 
@@ -140,6 +140,6 @@ print_version ()
 "This is free software: you are free to change and redistribute it.\n"
 "There is NO WARRANTY, to the extent permitted by law.\n"
 "\n"
-"Written by %s.",
+"Written by %s.\n",
         PROG_NAME, VERSION, COPYRIGHT, AUTHORS);
 }
