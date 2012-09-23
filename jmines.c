@@ -29,6 +29,7 @@
 #include <string.h>
 
 #include "jmines.h"
+#include "version.h"
 #include "cli.h"
 
 int
@@ -117,26 +118,28 @@ process_options (int argc, char **argv, int *num_mines, int *h, int *w)
 void
 print_help ()
 {
-    fprintf (stderr, "%s\n",
-"Usage: jmines [OPTION]...\n"
+    fprintf (stderr,
+"Usage: %s [OPTION]...\n"
 "Play minesweeper on the command line.\n"
-""
+"\n"
 " -n <num>\tset number of mines to <num>\n"
 " -x <width>\tset grid with to <width>\n"
 " -y <height>\tset grid height to <height>\n"
 " -h\t\tdisplay this help end exit\n"
-" -v\t\toutput version information and exit");
+" -v\t\toutput version information and exit",
+        PROG_NAME);
 }
 
 void
 print_version ()
 {
-    fprintf (stderr, "%s\n",
-"jmines 1.0.0\n"
-"Copyright (C) 2012 Jeremy Brubaker\n"
+    fprintf (stderr,
+"%s %s\n"
+"Copyright (C) %s\n"
 "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.\n"
 "This is free software: you are free to change and redistribute it.\n"
 "There is NO WARRANTY, to the extent permitted by law.\n"
 "\n"
-"Written by Jeremy Brubaker.");
+"Written by %s.",
+        PROG_NAME, VERSION, COPYRIGHT, AUTHORS);
 }

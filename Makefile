@@ -10,7 +10,7 @@ LDFLAGS=-l ncurses
 
 SOURCES=jmines.c game.c cli.c
 OBJECTS=$(SOURCES:.c=.o)
-HEADERS=$(SOURCES:.c=.h)
+HEADERS=$(SOURCES:.c=.h) version.h
 EXE=
 PROGNAME=jmines$(EXE)
 COREFILE=
