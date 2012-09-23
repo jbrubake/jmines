@@ -118,25 +118,36 @@ init_game (int num_mines, int height, int width)
     return data;
 }
 
-void
+int
 flag_cell (game_data *data, int x, int y)
 {
     mark_cell (data, x, y, FLAG);
+    if (data->grid.cell[x][y].contents == MINE)
+    {
+        data->num_flags++;
+        if (data->num_flags == data->num_mines)
+            return WINNER;
+    }
+
+    return SUCCESS;
 }
 
-void
+int
 guess_cell (game_data *data, int x, int y)
 {
-    mark_cell (data, x, y, GUESS);
+    return mark_cell (data, x, y, GUESS);
 }
 
-void
+int
 unmark_cell (game_data *data, int x, int y)
 {
-    mark_cell (data, x, y, NONE);
+    if (data->grid.cell[x][y].marker == FLAG)
+        data->num_flags--;
+
+    return mark_cell (data, x, y, NONE);
 }
 
-void
+int
 mark_cell (game_data *data, int x, int y, cell_marker marker)
 {
     data->grid.cell[x][y].marker = marker;
