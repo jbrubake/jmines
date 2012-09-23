@@ -44,25 +44,25 @@ game_loop (game_data *data)
 
         switch (input)
         {
-            case '1':
+            case 'u':
                 get_coordinates (&x, &y);
                 if (uncover_cell (data, x, y) == LOSER)
                     return LOSER;
                 break;
-            case '2':
+            case 'f':
                 get_coordinates (&x, &y);
                 if (flag_cell (data, x, y) == WINNER)
                     return WINNER;
                 break;
-            case '3':
+            case 'g':
                 get_coordinates (&x, &y);
                 (void) guess_cell (data, x, y);
                 break;
-            case '4':
+            case 'U':
                 get_coordinates (&x, &y);
                 (void) unmark_cell (data, x, y);
                 break;
-            case '5':
+            case 'q':
                 return 0; /* Must be a cleaner way to quit */
                 break;
             default:
@@ -89,11 +89,11 @@ void
 print_menu ()
 {
     printf ("%s", "\n\
-1) Uncover cell\n\
-2) Flag cell as mine\n\
-3) Mark cell as guess\n\
-4) Unmark cell\n\
-5) Quit\n\
+u) Uncover cell\n\
+f) Flag cell as mine\n\
+g) Mark cell as guess\n\
+U) Unmark cell\n\
+q) Quit\n\
 \n\
 Choice? ");
 }
