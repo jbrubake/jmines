@@ -185,6 +185,7 @@ uncover_cell (game_data *data, int x, int y)
     /* Do nothing if we try to uncover an already uncovered cell */
     if (data->grid.cell[x][y].is_covered == FALSE)
     {
+        ;
     }
     else if (data->grid.cell[x][y].contents == MINE)
     {

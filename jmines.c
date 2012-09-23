@@ -3,7 +3,7 @@
 |
 | Started on:  03/25/10 13:15:42
 |
-| Copyright 2012, Jeremy Brubaker <jbru362@gmail.com>
+| Copyright 2010, 2012 Jeremy Brubaker <jbru362@gmail.com>
 |---------------------------------------------------------------------*\
 | jmines is free software: you can redistribute it and/or modify       |
 | it under the terms of the GNU General Public License as published by |
@@ -48,9 +48,7 @@ main (int argc, char **argv)
 
     /* Process options */
     if (process_options (argc, argv, &num_mines, &height, &width) == 1)
-        goto exit_error;
-
-    /* Initialize interface */
+        goto exit_error; /* Eat that CSE 103! */
 
     /* Initialize game data */
     if (!(jmines = init_game (num_mines, height, width)))
