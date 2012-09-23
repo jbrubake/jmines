@@ -150,7 +150,11 @@ unmark_cell (game_data *data, int x, int y)
 int
 mark_cell (game_data *data, int x, int y, cell_marker marker)
 {
-    data->grid.cell[x][y].marker = marker;
+    /* Don't mark an uncovered cell */
+    if (data->grid.cell[x][y].is_covered == FALSE)
+        return SUCCESS;
+
+    return data->grid.cell[x][y].marker = marker;
 }
 
 /* Uncover the selected cell

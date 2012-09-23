@@ -13,4 +13,10 @@ mines have been correctly flagged (win the game). uncover_cell returns LOSER if
 a MINE is uncovered. flag_cell returns WINNER if all mines have been correctly
 flagged. 
 
+2012-09-23 Jeremy Brubaker <jbru362@gmail.com>
+
+* game.c: Do not allow player to mark an uncovered cell
+
+mark_cell() automatically returns success when attempting to mark an uncovered
+cell.
 
