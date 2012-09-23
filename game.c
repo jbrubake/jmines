@@ -25,21 +25,6 @@
 #include "game.h"
 
 /*
- * Generate a random number from 0 to limit (inclusiv) */
-int
-rand_limit (int limit)
-{
-    int divisor = RAND_MAX / (limit + 1);
-    int retval = 0;
-
-    do {
-        retval = rand () / divisor;
-    } while (retval > limit);
-
-    return retval;
-}
-
-/*
  * Initialize a game data structure and return a pointer
  */
 game_data *
@@ -103,7 +88,7 @@ init_game (int num_mines, int height, int width)
                 continue;
 
             /* Check each adjacent cell and increment contents if it contains a
-             * mine. Grid padding is always empty */
+             * mine. Grid padding cells are always empty */
             if (data->grid.cell[x  ][y-1].contents == MINE) data->grid.cell[x][y].contents++;
             if (data->grid.cell[x  ][y+1].contents == MINE) data->grid.cell[x][y].contents++;
             if (data->grid.cell[x-1][y-1].contents == MINE) data->grid.cell[x][y].contents++;
@@ -118,14 +103,21 @@ init_game (int num_mines, int height, int width)
     return data;
 }
 
+/*
+ * Flag a cell as containing a mine
+ */
 int
 flag_cell (game_data *data, int x, int y)
 {
     (void) mark_cell (data, x, y, FLAG);
 
+    /* If cell *actually* contains a mine,
+     * increment counter */
     if (data->grid.cell[x][y].contents == MINE)
     {
         data->num_flags++;
+        /* If all mines have been flagged,
+         * declare a winner */
         if (data->num_flags == data->num_mines)
             return WINNER;
     }
@@ -133,21 +125,32 @@ flag_cell (game_data *data, int x, int y)
     return SUCCESS;
 }
 
+/*
+ * Mark a cell as a guess
+ */
 int
 guess_cell (game_data *data, int x, int y)
 {
     return mark_cell (data, x, y, GUESS);
 }
 
+/*
+ * Remove all markings from a cell
+ */
 int
 unmark_cell (game_data *data, int x, int y)
 {
+    /* If cell was properly marked as a mine,
+     * decrement the counter */
     if (data->grid.cell[x][y].marker == FLAG)
         data->num_flags--;
 
     return mark_cell (data, x, y, NONE);
 }
 
+/*
+ * Perform actual marking/unmarking of a cel
+ */
 int
 mark_cell (game_data *data, int x, int y, cell_marker marker)
 {
@@ -160,29 +163,39 @@ mark_cell (game_data *data, int x, int y, cell_marker marker)
 
 /* Uncover the selected cell
  *
- * Return 1 if the cell contains a mine
+ * Return LOSER if a mine is uncovered,
+ * SUCCESS otherwise
+ *
  * Otherwise do a flood fill uncover, stopping
- * at numbers
+ * at ONE, TWO, THREE, etc.
  */
 int
 uncover_cell (game_data *data, int x, int y)
 {
-    if ((x == 0) || (y == 0) || (x == data->grid.width+1) || (y == data->grid.height+1))
+    /* Return if we hit the grid boundaries */
+    if ((x == 0) ||
+        (y == 0) ||
+        (x == data->grid.width+1) ||
+        (y == data->grid.height+1))
         return SUCCESS;
 
+    /* Do nothing if we try to uncover an already uncovered cell */
     if (data->grid.cell[x][y].is_covered == FALSE)
     {
     }
     else if (data->grid.cell[x][y].contents == MINE)
     {
-        return LOSER;
+        return LOSER; /* Return LOSER if we somehow uncovered a MINE */
     }
     else if (data->grid.cell[x][y].contents != EMPTY)
     {
-        data->grid.cell[x][y].is_covered = FALSE ;
+        data->grid.cell[x][y].is_covered = FALSE; /* Uncover non-empty,
+                                                     non-mine cells */
     }
     else
     {
+        /* Cell is empty so, uncover it and uncover all
+         * adjacent cells */
         data->grid.cell[x][y].is_covered = FALSE;
         (void) uncover_cell (data, x-1, y-1);
         (void) uncover_cell (data, x-1, y);
@@ -199,4 +212,19 @@ uncover_cell (game_data *data, int x, int y)
 
 /* TODO: Need a function to handle "uncovering" an already uncovered number
  * TODO: like middle clicking in Windows Minesweeper */
+
+/*
+ * Generate a random number from 0 to limit (inclusiv) */
+int
+rand_limit (int limit)
+{
+    int divisor = RAND_MAX / (limit + 1);
+    int retval = 0;
+
+    do {
+        retval = rand () / divisor;
+    } while (retval > limit);
+
+    return retval;
+}
 

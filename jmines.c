@@ -34,10 +34,12 @@
 int
 main (int argc, char **argv)
 {
+    /* Default is 10 mines in a 10x10 grid */
     int num_mines = 10;
     int height    = 10;
     int width     = 10;
 
+    /* Game data structure */
     game_data *jmines = NULL;
 
     /* Set locale according to environment */
@@ -55,8 +57,7 @@ main (int argc, char **argv)
     /* Initialize interface */
 
     /* Initialize game data */
-    jmines = init_game (num_mines, height, width);
-    if (!jmines)
+    if (!(jmines = init_game (num_mines, height, width)))
         goto init_game_fail;
 
     /* Game loop */
@@ -74,6 +75,5 @@ main (int argc, char **argv)
 
 init_game_fail:
     printf ("%s\n", "Could not allocate game_data");
-
     exit (errno);
 }

@@ -26,6 +26,9 @@
 #include "cli.h"
 #include "game.h"
 
+/*
+ * User input loop
+ */
 int
 game_loop (game_data *data)
 {
@@ -63,7 +66,7 @@ game_loop (game_data *data)
                 (void) unmark_cell (data, x, y);
                 break;
             case 'q':
-                return 0; /* Must be a cleaner way to quit */
+                return SUCCESS; /* Must be a cleaner way to quit */
                 break;
             default:
                 printf ("%s\n", "Invalid choice!");
@@ -72,6 +75,9 @@ game_loop (game_data *data)
     }
 }
 
+/*
+ * Read and return x and y coordinates
+ */
 void
 get_coordinates (int *x, int *y)
 {
@@ -85,6 +91,9 @@ get_coordinates (int *x, int *y)
     *y = atoi (strtok (NULL, " \n"));
 }
 
+/*
+ * Print user choice menu
+ */
 void
 print_menu ()
 {
@@ -98,6 +107,9 @@ q) Quit\n\
 Choice? ");
 }
 
+/*
+ * Print current state of grid
+ */
 void
 print_grid (game_data *data)
 {
@@ -107,6 +119,7 @@ print_grid (game_data *data)
 
     printf ("%s", "  ");
 
+    /* Print x-coordinate row */
     for (i = 1; i <= data->grid.width; i++)
     {
         printf ("%c", ' ');
@@ -119,28 +132,35 @@ print_grid (game_data *data)
 
     for (y = 1; y < data->grid.height+1; y++)
     {
+        /* Print row's y-coordinate */
         if (y < 100) printf ("%c", ' ');
         if (y < 10)  printf ("%c", ' ');
         printf ("%d", y);
+
+        /* Print row of cells */
         for (x = 1; x < data->grid.width+1; x++)
         {
             printf ("  %c  ", print_cell_contents (data, x, y));
         }
+
         printf ("%s", "\n");
     }
 }
 
-char
-print_cell_contents (game_data *data, int x, int y)
-{
-    char printable = '\0';
+/*
+ * Convert struct game_data cell contents to a printable character and return it
+ */
+char print_cell_contents (game_data *data, int x, int y) { char printable =
+    '\0';
 
-    if (data->grid.cell[x][y].marker == FLAG)
+    /* First check for markers or if cell is covered */
+    if (data->grid.cell[x][y].marker          == FLAG)
         printable = 'F';
-    else if (data->grid.cell[x][y].marker == GUESS)
+    else if (data->grid.cell[x][y].marker     == GUESS)
         printable = 'G';
     else if (data->grid.cell[x][y].is_covered == true)
         printable = '.';
+    /* If cell is uncovered and unmarked, print its contents */
     else
     {
         switch (data->grid.cell[x][y].contents)
@@ -177,5 +197,6 @@ print_cell_contents (game_data *data, int x, int y)
                 break;
         }
     }
+
     return printable;
 }
