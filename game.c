@@ -152,14 +152,14 @@ int
 uncover_cell (game_data *data, int x, int y)
 {
     if ((x == 0) || (y == 0) || (x == data->grid.width+1) || (y == data->grid.height+1))
-        return 0;
+        return SUCCESS;
 
     if (data->grid.cell[x][y].is_covered == FALSE)
     {
     }
     else if (data->grid.cell[x][y].contents == MINE)
     {
-        return 1;
+        return LOSER;
     }
     else if (data->grid.cell[x][y].contents != EMPTY)
     {
@@ -178,7 +178,7 @@ uncover_cell (game_data *data, int x, int y)
         uncover_cell (data, x+1, y+1);
     }
 
-    return 0;
+    return SUCCESS;
 }
 
 /* TODO: Need a function to handle "uncovering" an already uncovered number

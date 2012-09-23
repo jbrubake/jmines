@@ -59,8 +59,15 @@ main (int argc, char **argv)
         goto init_game_fail;
 
     /* Game loop */
-    if (game_loop (jmines) == 1)
-        printf ("%s\n", "YOU LOST!!! TRY AGAIN!");
+    switch (game_loop (jmines))
+    {
+        case WINNER:
+            printf ("%s\n", "YOU WIN!!!");
+            break;
+        case LOSER:
+            printf ("%s\n", "YOU LOST!!! TRY AGAIN!");
+            break;
+    }
 
     exit (0);
 

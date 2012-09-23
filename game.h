@@ -28,6 +28,11 @@
 #define MAX_Y 100
 #define MAX_X 100
 
+/* Function return codes */
+#define SUCCESS 0
+#define WINNER  1
+#define LOSER   2
+
 typedef enum cell_contents {
     EMPTY,                                          /* Cell is empty */
     ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, /* Cell is adjacent to mines */
@@ -43,7 +48,7 @@ typedef enum cell_marker {
 /* Game data structure */
 typedef struct game_data {
     int num_mines; /* Number of mines in grid */
-    int num_flags; /* Number of flags placed */
+    int num_flags; /* Number of actual mines flagged */
 
     /* The grid */
     struct {
@@ -68,9 +73,9 @@ game_data *init_game (int, int, int);
 
 int uncover_cell (game_data *, int, int);
 
-void mark_cell    (game_data *, int, int, cell_marker);
-void unmark_cell  (game_data *, int, int);
-void flag_cell    (game_data *, int, int);
-void guess_cell   (game_data *, int, int);
+int mark_cell    (game_data *, int, int, cell_marker);
+int unmark_cell  (game_data *, int, int);
+int flag_cell    (game_data *, int, int);
+int guess_cell   (game_data *, int, int);
 
 #endif /* !defined (GAME_H) */

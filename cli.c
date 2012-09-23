@@ -46,12 +46,13 @@ game_loop (game_data *data)
         {
             case '1':
                 get_coordinates (&x, &y);
-                if (uncover_cell (data, x, y) == 1)
-                    return 1;
+                if (uncover_cell (data, x, y) == LOSER)
+                    return LOSER;
                 break;
             case '2':
                 get_coordinates (&x, &y);
-                flag_cell (data, x, y);
+                if (flag_cell (data, x, y) == WINNER)
+                    return WINNER;
                 break;
             case '3':
                 get_coordinates (&x, &y);
