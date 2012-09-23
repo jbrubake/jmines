@@ -28,6 +28,7 @@
 
 #include <string.h>
 
+#include "jmines.h"
 #include "cli.h"
 
 int
