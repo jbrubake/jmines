@@ -101,9 +101,11 @@ process_options (int argc, char **argv, int *num_mines, int *h, int *w)
             case 'x':
                 *w = atoi (optarg);
                 if (*w == 0) *w = 10;
+                break;
             case 'y':
                 *h = atoi (optarg);
                 if (*h == 0) *h = 10;
+                break;
             default:
                 print_help ();
                 return 1;
