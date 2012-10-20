@@ -24,7 +24,10 @@
 
 #include "game.h"
 
-static int mark_cell    (game_data *, int, int, cell_marker);
+/*
+ * Internal engine functions
+ */
+static int mark_cell  (game_data *, int, int, cell_marker);
 static int rand_limit (int);
 
 /*

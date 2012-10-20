@@ -45,10 +45,12 @@ typedef enum cell_marker {
     GUESS /* Cell is marked as a guess */
 } cell_marker;
 
-/* Game data structure */
+/*
+ * GAME DATA STRUCTURE
+ */
 typedef struct game_data {
     int num_mines; /* Number of mines in grid */
-    int num_flags; /* Number of actual mines flagged */
+    int num_flags; /* Number of *actual* mines flagged */
 
     /* The grid */
     struct {
