@@ -1,7 +1,7 @@
 /*--------------------------------------------------------------------*\
 | This file is part of jmines
 |
-| <+Description+>
+| Game engine
 |
 | Copyright 2012, Jeremy Brubaker <jbru362@gmail.com>
 |---------------------------------------------------------------------*\

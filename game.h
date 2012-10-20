@@ -1,7 +1,7 @@
 /*--------------------------------------------------------------------*\
 | This file is part of jmines
 |
-| <+Description+>
+| Header file for game engine
 |
 | Copyright 2012, Jeremy Brubaker <jbru362@gmail.com>
 |---------------------------------------------------------------------*\
@@ -67,6 +67,8 @@ typedef struct game_data {
 
 } game_data;
 
+/* Init a game structure
+ *  @null@ tells splint we can return NULL */
 /*@null@*/ game_data *init_game (int, int, int);
 
 int uncover_cell (game_data *, int, int);
