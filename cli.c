@@ -122,34 +122,51 @@ print_grid (game_data *data)
     int y = 0;
     int i = 0;
 
-    printf ("%s", "  ");
-
-    /* Print x-coordinate row */
+    /*
+     * Print x-coordinate
+     */
+    printf ("     ");
     for (i = 1; i <= data->grid.width; i++)
-    {
-        printf ("%c", ' ');
-        if (i < 100) printf ("%c", ' ');
-        if (i < 10)  printf ("%c", ' ');
-        printf ("%d ", i);
-    }
+        printf (" %3d ", i);
+    printf ("\n");
 
-    printf ("%s", "\n");
+    /*
+     * Print top of box
+     */
+    printf ("    +-");
+    for (i = 1; i <= data->grid.width; i++)
+        printf ("%s", "-----");
+    printf ("+\n");
 
+    /*
+     * Print each row
+     */
     for (y = 1; y < data->grid.height+1; y++)
     {
-        /* Print row's y-coordinate */
-        if (y < 100) printf ("%c", ' ');
-        if (y < 10)  printf ("%c", ' ');
-        printf ("%d", y);
+        printf ("%3d | ", y); /* y-coord and left of box */
 
         /* Print row of cells */
         for (x = 1; x < data->grid.width+1; x++)
-        {
             printf ("  %c  ", print_cell_contents (data, x, y));
-        }
 
-        printf ("%s", "\n");
+        printf ("| %d\n", y); /* right of box and y-coord */
     }
+
+    /*
+     * Print bottom of box
+     */
+    printf ("    +-");
+    for (i = 1; i <= data->grid.width; i++)
+        printf ("-----"); 
+    printf ("+\n");
+
+    /*
+     * Print x-coordinates
+     */
+    printf ("     ");
+    for (i = 1; i <= data->grid.width; i++)
+        printf (" %3d ", i);
+    printf ("\n");
 }
 
 /*
