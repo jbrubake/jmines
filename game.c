@@ -46,8 +46,8 @@ init_game (int num_mines, int height, int width)
 
     data->num_mines = num_mines; /* User requested number of mines */
     data->num_flags = 0;         /* No flags have been placed */
-    data->grid.height = height;  /* User requested dimensions */
-    data->grid.width  = width;
+    data->grid.height = (height > MAX_Y) ? MAX_Y : height;  /* User requested dimensions */
+    data->grid.width  = (width  > MAX_X) ? MAX_X : width;
 
     /* Set each cell to empty, covered and free of markers */
     for (x = 0; x < MAX_X+2; x++) /* MAX_* + 2 in order to handle
