@@ -55,7 +55,7 @@ init_game (int num_mines, int height, int width)
     {
         for (y = 0; y < MAX_Y+2; y++)
         {
-            data->grid.cell[x][y].is_covered = TRUE;
+            data->grid.cell[x][y].is_covered = true;
             data->grid.cell[x][y].contents   = EMPTY;
             data->grid.cell[x][y].marker     = NONE;
         }
@@ -161,7 +161,7 @@ int
 mark_cell (game_data *data, int x, int y, cell_marker marker)
 {
     /* Don't mark an uncovered cell */
-    if (data->grid.cell[x][y].is_covered == FALSE)
+    if (data->grid.cell[x][y].is_covered == false)
         return SUCCESS;
 
     return data->grid.cell[x][y].marker = marker;
@@ -186,7 +186,7 @@ uncover_cell (game_data *data, int x, int y)
         return SUCCESS;
 
     /* Do nothing if we try to uncover an already uncovered cell */
-    if (data->grid.cell[x][y].is_covered == FALSE)
+    if (data->grid.cell[x][y].is_covered == false)
     {
         ;
     }
@@ -196,14 +196,14 @@ uncover_cell (game_data *data, int x, int y)
     }
     else if (data->grid.cell[x][y].contents != EMPTY)
     {
-        data->grid.cell[x][y].is_covered = FALSE; /* Uncover non-empty,
+        data->grid.cell[x][y].is_covered = false; /* Uncover non-empty,
                                                      non-mine cells */
     }
     else
     {
         /* Cell is empty so, uncover it and uncover all
          * adjacent cells */
-        data->grid.cell[x][y].is_covered = FALSE;
+        data->grid.cell[x][y].is_covered = false;
         (void) uncover_cell (data, x-1, y-1);
         (void) uncover_cell (data, x-1, y);
         (void) uncover_cell (data, x-1, y+1);

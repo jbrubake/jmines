@@ -21,8 +21,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-/* XXX: There must be another way to do this! */
-#include <ncurses.h>
+#include <stdbool.h>
 
 /* Max dimensions of grid */
 #define MAX_Y 100

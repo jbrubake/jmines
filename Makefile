@@ -5,8 +5,8 @@ RM=rm
 MKDEPEND=$(CC) -MM
 
 INCLUDES=
-CFLAGS=-c -Wall -ansi $(INCLUDES) -DDEBUG
-LDFLAGS=-l ncurses
+CFLAGS=-c -Wall -std=c99 $(INCLUDES) -DDEBUG
+LDFLAGS=
 
 SOURCES=jmines.c game.c cli.c
 OBJECTS=$(SOURCES:.c=.o)
