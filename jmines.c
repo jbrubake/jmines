@@ -29,8 +29,10 @@
 #include <string.h>
 
 #include "jmines.h"
+#include "game.h"
 #include "version.h"
-#include "cli.h"
+
+int game_loop (game_data *);
 
 int
 main (int argc, char **argv)
