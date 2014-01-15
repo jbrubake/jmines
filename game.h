@@ -27,10 +27,11 @@
 #define MAX_Y 100
 #define MAX_X 100
 
-/* Function return codes */
+/* Game-loop return codes */
 #define SUCCESS 0
 #define WINNER  1
 #define LOSER   2
+#define ERROR   3
 
 typedef enum cell_contents {
     EMPTY,                                          /* Cell is empty */

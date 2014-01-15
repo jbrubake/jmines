@@ -68,6 +68,10 @@ main (int argc, char **argv)
         case LOSER:
             printf ("%s\n", "YOU LOST!!! TRY AGAIN!");
             break;
+        default:
+            /* ERROR */
+            exit (1);
+            break;
     }
 
     exit (0);
