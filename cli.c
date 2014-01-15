@@ -29,8 +29,9 @@
 static void print_grid (game_data *);
 static void print_menu ();
 
-static void get_coordinates (int *x, int *y);
+static int get_coordinates (int *x, int *y);
 static char print_cell_contents (game_data *, int, int);
+
 /*
  * User input loop
  */
@@ -46,28 +47,27 @@ game_loop (game_data *data)
         print_grid (data);
         print_menu ();
 
-        input = (char) getc (stdin); /* Only need the first character */
-        while (getc (stdin) != '\n') /* Discard rest of line */
-            ;
+        /* TODO: better input validation to prevent crashes */
+        scanf (" %c", &input); /* get command */
 
         switch (input)
         {
             case 'u':
-                get_coordinates (&x, &y);
+                if (get_coordinates (&x, &y) != 2) break;
                 if (uncover_cell (data, x, y) == LOSER)
                     return LOSER;
                 break;
             case 'f':
-                get_coordinates (&x, &y);
+                if (get_coordinates (&x, &y) != 2) break;
                 if (flag_cell (data, x, y) == WINNER)
                     return WINNER;
                 break;
             case 'g':
-                get_coordinates (&x, &y);
+                if (get_coordinates (&x, &y) != 2) break;
                 (void) guess_cell (data, x, y);
                 break;
             case 'U':
-                get_coordinates (&x, &y);
+                if (get_coordinates (&x, &y) != 2) break;
                 (void) unmark_cell (data, x, y);
                 break;
             case 'q':
@@ -77,23 +77,19 @@ game_loop (game_data *data)
                 printf ("%s\n", "Invalid choice!");
                 break;
         }
+
+        while (getchar () != '\n') /* Discard rest of line */
+            ;
     }
 }
 
 /*
  * Read and return x and y coordinates
  */
-void
+int
 get_coordinates (int *x, int *y)
 {
-    char input[80] = "";
-
-    printf ("%s", "Coordinates (x, y)? ");
-
-    /* TODO: Make this safer!! */
-    (void) fgets (input, 80, stdin);
-    *x = atoi (strtok (input, ", "));
-    *y = atoi (strtok (NULL, " \n"));
+    return scanf (" %d %d", x, y);
 }
 
 /*
@@ -103,11 +99,13 @@ void
 print_menu ()
 {
     printf ("%s", "\n\
-u) Uncover cell\n\
-f) Flag cell as mine\n\
-g) Mark cell as guess\n\
-U) Unmark cell\n\
-q) Quit\n\
+u*) Uncover cell\n\
+f*) Flag cell as mine\n\
+g*) Mark cell as guess\n\
+U*) Unmark cell\n\
+q ) Quit\n\
+\n\
+*: cmd x-coord y-coord\n\
 \n\
 Choice? ");
 }
@@ -172,8 +170,10 @@ print_grid (game_data *data)
 /*
  * Convert struct game_data cell contents to a printable character and return it
  */
-char print_cell_contents (game_data *data, int x, int y) { char printable =
-    '\0';
+char
+print_cell_contents (game_data *data, int x, int y)
+{
+    char printable = '\0';
 
     /* First check for markers or if cell is covered */
     if (data->grid.cell[x][y].marker          == FLAG)
