@@ -5,10 +5,10 @@ RM=rm
 MKDEPEND=$(CC) -MM
 
 INCLUDES=
-CFLAGS=-c -Wall -std=c99 $(INCLUDES) -DDEBUG
+CFLAGS=-c -g -Wall -std=c99 $(INCLUDES) -DDEBUG -DNDEBUG -DDEBUG_LEVEL=DBG_STD
 LDFLAGS=
 
-SOURCES=jmines.c game.c cli.c
+SOURCES=jmines.c grid.c cli.c options.c debug.c errmsg.c
 OBJECTS=$(SOURCES:.c=.o)
 HEADERS=$(SOURCES:.c=.h) version.h
 EXE=

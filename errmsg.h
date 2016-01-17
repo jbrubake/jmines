@@ -21,10 +21,20 @@
 
 /** @file
  *
- * Constants used by help functions
+ * This file provides error handling routines. The purpose of
+ * each function is denoted by its name:
+ *
+ *    - *_return: print message and return
+ *    - *_exit:   print message and return
+ *       + sys routines call `exit(errno`)
+ *       + other routines call `exit(1)`
+ *    - *_dump:   print message, dump core and terminate
+ *    - *_sys:    append last `strerror(3)` message
  */
 
-const char PROG_NAME[] = "jmines";
-const char VERSION[]   = "1.0.0";
-const char AUTHORS[]   = "Jeremy Brubaker";
-const char COPYRIGHT[] = "2010, 2012 Orion Arts";
+void err_sys_dump (const char *fmt, ...);
+void err_sys_exit (const char *fmt, ...);
+void err_sys_return (const char *fmt, ...);
+void err_exit (const char *fmt, ...);
+void err_return (const char *fmt, ...);
+

@@ -1,151 +1,57 @@
-/*====================================================================*\
-| jmines-1.1.0
-|
-| Started on:  03/25/10 13:15:42
-|
-| Copyright 2010, 2012 Jeremy Brubaker <jbru362@gmail.com>
-|---------------------------------------------------------------------*\
-| jmines is free software: you can redistribute it and/or modify       |
-| it under the terms of the GNU General Public License as published by |
-| the Free Software Foundation, either version 3 of the License, or    |
-| (at your option) any later version.                                  |
-|                                                                      |
-| jmines is distributed in the hope that it will be useful,            |
-| but WITHOUT ANY WARRANTY; without even the implied warranty of       |
-| MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the         |
-| GNU General Public License for more details.                         |
-|                                                                      |
-| You should have received a copy of the GNU General Public License    |
-| along with jmines. If not, see <http://www.gnu.org/licenses/>.       |
-|======================================================================/
-| <+Description+>
-\*====================================================================*/
+/** @file
+ *
+ *  __jmines__ Another minesweeper clone
+ *
+ * @version   1.0.0
+ * @author    Jeremy Brubaker
+ * @date      2010-03-25
+ * @copyright 2010, 2010 GNU Public License
+ */
+
+/*
+ * jmines is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * jmines is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with jmines. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include <stdlib.h>
-#include <stdio.h>
-#include <errno.h>
-#include <locale.h>
-#include <getopt.h>
-#include <string.h>
+#include <assert.h>
 
-#include "jmines.h"
-#include "game.h"
-#include "version.h"
+#include "options.h"
+#include "errmsg.h"
+#include "debug.h"
 
-int game_loop (game_data *);
+extern int main_loop (Options *opt); /* provided by the ui module */
 
+/**
+ * @return exit with the return value of `main_loop()`
+ */
 int
 main (int argc, char **argv)
 {
-    /* Default is 10 mines in a 10x10 grid */
-    int num_mines = 10;
-    int height    = 10;
-    int width     = 10;
+    Options *opt;
 
-    /* Game data structure */
-    game_data *jmines = NULL;
+    /* process options */
+    opt = set_options (argc, argv);
+    if (opt == NULL) err_exit ("Invalid options");
 
-    /* Set locale according to environment */
-    (void) setlocale (LC_ALL, "");
+    /* simple check to make sure grid is big enough
+     * does not make sure grid size is sensible! */
+    if (opt->height * opt->width < opt->nmines)
+        err_exit ("Size too small. Cannot place requested mines");
 
-    /* Process options */
-    if (process_options (argc, argv, &num_mines, &height, &width) == 1)
-        goto exit_error; /* Eat that CSE 103! */
+    TRACE ((DBG_STD, "height = %d; width = %d; mines = %d\n",
+                opt->height, opt->width, opt->nmines));
 
-    /* Initialize game data */
-    if (!(jmines = init_game (num_mines, height, width)))
-    {
-        printf ("%s\n", "Could not allocate game_data");
-        goto exit_error;
-    }
-
-    /* Game loop */
-    switch (game_loop (jmines))
-    {
-        case WINNER:
-            printf ("%s\n", "YOU WIN!!!");
-            break;
-        case LOSER:
-            printf ("%s\n", "YOU LOST!!! TRY AGAIN!");
-            break;
-        default:
-            /* ERROR */
-            exit (1);
-            break;
-    }
-
-    exit (0);
-
-exit_error:
-    exit (errno);
+    exit (main_loop (opt));
 }
 
-/*
- * Rudimentary command line option processing
- */
-int
-process_options (int argc, char **argv, int *num_mines, int *h, int *w)
-{
-    int opt = 0;
-
-    while ((opt = getopt (argc, argv, "hvn:x:y:")) != -1)
-    {
-        switch (opt)
-        {
-            case 'h':
-                print_help ();
-                return 1;
-                break;
-            case 'v':
-                print_version ();
-                return 1;
-                break;
-            case 'n':
-                *num_mines = atoi (optarg);
-                if (*num_mines == 0) *num_mines = 10;
-                break;
-            case 'x':
-                *w = atoi (optarg);
-                if (*w == 0) *w = 10;
-                break;
-            case 'y':
-                *h = atoi (optarg);
-                if (*h == 0) *h = 10;
-                break;
-            default:
-                print_help ();
-                return 1;
-                break;
-        }
-    }
-    return 0;
-}
-
-void
-print_help ()
-{
-    fprintf (stderr,
-"Usage: %s [OPTION]...\n"
-"Play minesweeper on the command line.\n"
-"\n"
-" -n <num>\tset number of mines to <num>\n"
-" -x <width>\tset grid with to <width>\n"
-" -y <height>\tset grid height to <height>\n"
-" -h\t\tdisplay this help end exit\n"
-" -v\t\toutput version information and exit\n",
-        PROG_NAME);
-}
-
-void
-print_version ()
-{
-    fprintf (stderr,
-"%s %s\n"
-"Copyright (C) %s\n"
-"License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.\n"
-"This is free software: you are free to change and redistribute it.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
-"\n"
-"Written by %s.\n",
-        PROG_NAME, VERSION, COPYRIGHT, AUTHORS);
-}

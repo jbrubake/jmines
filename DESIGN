@@ -1,0 +1,57 @@
+GRID
+====
+- store minefield grid
+
+Public Methods
+--------------
+- get dimensions
+- get cell visual representation
+- flag/guess/unmark/uncover cell
+
+Private Methods
+---------------
+- convert coordinates to cell
+- new/delete
+- mark cell
+
+
+UI
+==
+
+Public Methods
+--------------
+- 
+
+Private Methods
+---------------
+- new/delete
+
+Widgets
+-------
+- grid display
+- menu
+- timer
+- mine counter
+
+UI.grid display
+===============
+- display and interact with minefield
+
+UI.menu
+======
+- 
+
+UI.timer
+=======
+- display timer
+
+UI.mine counter
+==============
+- display total mines left to mark
+
+MAIN
+====
+
+- process command line
+- create ui
+- start event loop

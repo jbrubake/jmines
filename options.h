@@ -19,12 +19,18 @@
  * along with jmines. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** @file
- *
- * Constants used by help functions
- */
+/** @file */
 
-const char PROG_NAME[] = "jmines";
-const char VERSION[]   = "1.0.0";
-const char AUTHORS[]   = "Jeremy Brubaker";
-const char COPYRIGHT[] = "2010, 2012 Orion Arts";
+typedef struct Options Options;
+
+/**
+ * Store player options for a game
+ */
+struct Options {
+    int height; /**< @brief grid height */
+    int width;  /**< @brief grid width */
+    int nmines; /**< @brief number of mines on the grid */
+};
+
+Options * set_options (int argc, char **argv);
+

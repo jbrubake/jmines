@@ -19,12 +19,30 @@
  * along with jmines. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** @file
- *
- * Constants used by help functions
- */
+/** @file */
 
-const char PROG_NAME[] = "jmines";
-const char VERSION[]   = "1.0.0";
-const char AUTHORS[]   = "Jeremy Brubaker";
-const char COPYRIGHT[] = "2010, 2012 Orion Arts";
+#include <stdio.h>
+#include <stdarg.h>
+
+#include "debug.h"
+
+/* dbg_trace */
+/**
+ * Print debug trace statements if
+ * `level` is <= DEBUG_LEVEL
+ *
+ * @param level debug level
+ * @param fmt   `printf(3)` format string
+ * @param ...   *fmt* parameters
+ */
+void
+dbg_trace (int level, const char *fmt, ...)
+{
+    if (level > DEBUG_LEVEL) return;
+
+    va_list args;
+    va_start (args, fmt);
+    vfprintf (stderr, fmt, args);
+    va_end (args);
+}
+
