@@ -3,6 +3,7 @@ LINT=splint
 CTAGS=ctags
 RM=rm
 MKDEPEND=$(CC) -MM
+DOXYGEN=doxygen
 
 INCLUDES=
 CFLAGS=-c -g -Wall -std=c99 $(INCLUDES) -DDEBUG -DNDEBUG -DDEBUG_LEVEL=DBG_STD
@@ -34,5 +35,8 @@ lint: $(SOURCES) $(HEADERS)
 
 clean:
 	-$(RM) $(SOURCES:.c=.o) $(PROGNAME) $(COREFILE)
+
+dox: $(SOURCES) $(HEADERS)
+	$(DOXYGEN)
 
 -include .depend
