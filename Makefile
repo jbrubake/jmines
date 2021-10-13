@@ -6,6 +6,8 @@ RM=rm
 MKDEPEND=$(CC) -MM
 DOXYGEN=doxygen
 
+PREFIX=/usr/local
+
 INCLUDES=
 CFLAGS=-c -Wall -std=c99 $(INCLUDES) -DDEBUG
 LDFLAGS=
@@ -42,5 +44,8 @@ clean:
 
 dox: $(SOURCES) $(HEADERS)
 	$(DOXYGEN)
+
+install: $(PROGNAME)
+	install -m 0755 -t $(PREFIX)/bin $(PROGNAME)
 
 -include .depend
