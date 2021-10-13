@@ -10,7 +10,7 @@ INCLUDES=
 CFLAGS=-c -Wall -std=c99 $(INCLUDES) -DDEBUG
 LDFLAGS=
 
-OURCES=jmines.c game.c cli.c
+SOURCES=jmines.c game.c cli.c
 OBJECTS=$(SOURCES:.c=.o)
 HEADERS=$(SOURCES:.c=.h) version.h
 EXE=
